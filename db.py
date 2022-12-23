@@ -29,7 +29,9 @@ class Ret_Mut(db.Model):
         }
 
     def get_ticker(self, ticker):
-        db.query.filter_by(ticker=ticker).first()
+        print(db.query.filter_by(ticker=ticker).first())
+
+    def refresh()
 
 
     
