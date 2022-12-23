@@ -1,10 +1,15 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, request, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.debug = True
 
-# Configuring the database for sqlite3
+
+
+
+
+# **************** Databse Model *****************
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 
@@ -19,6 +24,8 @@ class Ret_Mut(db.Model):
     MA_200 = db.Column(db.Double)
     Year_Low = db.Column(db.Double)
     Year_High = db.Column(db.Double)
+
+
 
 
 
@@ -52,6 +59,25 @@ def refresh():
         print(num_rows_deleted + " Rows Deleted Succesfully!")
     except:
         db.session.rollback()
+
+
+
+
+
+# **************** Routing Table *****************
+
+@app.route('localhost:5000/refreshtable', methods=['GET'])
+def refresh_table():
+    refresh()
+    return 'OK'
+
+
+@app.route('localhost:5000/tickerstats', methods=['GET'])
+def ticker_stats():
+    
+
+
+
 
 
 
