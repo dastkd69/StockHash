@@ -12,6 +12,7 @@ import datetime
 import time
 import os
 import requests
+import app
 #import time
 #import schedule
 #import requests
@@ -66,7 +67,7 @@ def main(cunt=0):
             os.remove(f'data/{ticker}.csv')
             print(f'{ticker}.csv  is removed')
         # df.to_csv(f"data/{ticker}.csv")  temporarily removed, caused 'data' directory nonexistent bug
-        print(cunt)
+        # print(cunt)
     
         
         df['Percent Change'] = df['Adj Close'].pct_change()
@@ -77,7 +78,7 @@ def main(cunt=0):
         
 
         # database values come from here, returns_multiple is the required var
-        print (f'Ticker: {ticker}; Returns Multiple against NIFTY 50: {returns_multiple}\n')
+        # print (f'Ticker: {ticker}; Returns Multiple against NIFTY 50: {returns_multiple}\n')
         time.sleep(1)
         
     rs_df = pd.DataFrame(list(zip(ticker_list.Symbol, returns_multiples)), columns=['Ticker', 'Returns_multiple'])
@@ -130,9 +131,10 @@ def main(cunt=0):
             print (e)
             print(f"Could not gather data on {stock}")
     
-    exportList = exportList.sort_values(by='RS_Rating', ascending=False,ignore_index=True)
+    # exportList = exportList.sort_values(by='RS_Rating', ascending=False,ignore_index=True)    # might not be necessary any further due to database helper. check.
     # cannot figure out pipeline, couldn't refactor into functions. adding on database code. exportlist to database.
-    
+    app.store(export_list=exportList)
+
     print('\n', exportList)
     
     expl = exportList.Stock
