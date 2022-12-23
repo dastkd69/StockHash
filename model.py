@@ -113,14 +113,26 @@ def main(cunt=0):
             condition_6 = currentClose >= (1.3*low_of_52week)
             condition_7 = currentClose >= (.80*high_of_52week)
             
+
+            # using lists, switch to dataframe
             if(condition_1 and condition_2 and condition_3 and condition_4 and condition_5 and condition_6 and condition_7):
-                exportList = exportList.append({'Stock': stock, "RS_Rating": RS_Rating ,"50 Day MA": moving_average_50, "150 Day Ma": moving_average_150, "200 Day MA": moving_average_200, "52 Week Low": low_of_52week, "52 week High": high_of_52week}, ignore_index=True)
+                exportList = exportList.append({
+                    'Stock': stock, 
+                    "RS_Rating": RS_Rating,
+                    "MA_50": moving_average_50, 
+                    "MA_150": moving_average_150, 
+                    "MA_200": moving_average_200, 
+                    "Year_Low": low_of_52week, 
+                    "Year_High": high_of_52week}, ignore_index=True)
                 print (stock + " made the Minervini requirements")
+
         except Exception as e:
             print (e)
             print(f"Could not gather data on {stock}")
     
     exportList = exportList.sort_values(by='RS_Rating', ascending=False,ignore_index=True)
+    # cannot figure out pipeline, couldn't refactor into functions. adding on database code. exportlist to database.
+    
     print('\n', exportList)
     
     expl = exportList.Stock
